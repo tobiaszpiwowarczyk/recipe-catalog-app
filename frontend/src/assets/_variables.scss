@@ -1,0 +1,41 @@
+$white:                   #FFFBFE; //#FFEAEC;
+$black:                   #201E1F;
+$gray:                    #63768D; // #B0BBBF
+$lightGray:               #B0BBBF;
+$green:                   #17B890;
+$blue:                    #3C91E6;
+$yellow:                  #F4FF52; // #f2bb05
+$red:                     #FF0035;
+
+// właściwości komponentu header
+$header_height:             70px;
+$header_z_index:            10;
+
+// właściwości komponentu container
+$container_width:           1600px;
+
+// właściwości pola wejściowego
+$input-height:              60px;
+$input-width:               350px;
+$input-border-width:        2px;
+$input-margin:              10px;
+
+// właściwości przycisku
+$button-height:             60px;
+
+// właściwości nakładki ładowania
+$loading-spinner-z-index:   12;
+$loading-spinner-width:     70px;
+
+// Właściwości okien dialogowych
+$modal-header-height:       70px;
+$modal-z-index:             11;
+
+// długości urządzeń
+$laptop-width:              1024px;
+$tablet-width:              768px;
+$mobile-width:              425px;
+
+// inne wartości
+$bezier:                    cubic-bezier(0,.8,.2,1);
+$border-radius:             3px;

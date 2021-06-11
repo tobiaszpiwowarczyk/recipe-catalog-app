@@ -1,0 +1,38 @@
+version: '3.4'
+
+services: 
+  database:
+    build: database/
+    ports:
+      - "5432:5432"
+    volumes:
+      # - './database/data:/var/lib/postgresql'
+      - './database/src/:/docker-entrypoint-initdb.d'
+    environment:
+      - POSTGRES_PASSWORD=password#123
+      - POSTGRES_DB=recipe_catalog_app
+
+  backend:
+    build: backend/
+    ports:
+      - 3000:3000
+    depends_on:
+      - database
+    volumes:
+      - './backend:/app'
+    environment:
+      - POSTGRES_PASSWORD=password#123
+      - POSTGRES_DB=recipe_catalog_app
+      - POSTGRES_HOSTNAME=database
+
+  frontend:
+    build: frontend/
+    depends_on:
+      - backend
+    ports:
+      - 4200:4200
+    volumes:
+      - "./frontend:/app"
+      - "/app/node_modules"
+    environment:
+      - BACKEND_HOSTNAME=backend

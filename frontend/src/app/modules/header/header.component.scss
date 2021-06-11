@@ -1,0 +1,29 @@
+@import '../../../assets/variables';
+@import '../../../assets/mixins';
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: $header_height;
+    background: $white;
+    box-shadow: 0 2px 10px rgba(0,0,0,.2);
+    z-index: $header_z_index;
+
+    &__wrapper {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 20px;
+
+        .brand {
+            position: relative;
+            padding: 0 20px;
+            cursor: pointer;
+            line-height: $header_height;
+
+            @include hoverLayer(rgba($blue, 0.2));
+        }
+    }
+}

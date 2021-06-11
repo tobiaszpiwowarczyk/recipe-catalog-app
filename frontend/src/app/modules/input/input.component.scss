@@ -1,0 +1,145 @@
+@import '../../../assets/variables';
+@import '../../../assets/mixins';
+
+.input {
+    position: relative;
+    width: $input-width;
+    margin: $input-margin 0;
+    border: $input-border-width solid $black, {
+        radius: $border-radius;
+    };
+    box-shadow: 0 2px 5px rgba($black, 0.1);
+    transition: border .2s $bezier;
+
+    &__section {
+        position: relative;
+        width: 100%;
+
+        &:first-child {
+            display: flex;
+        }
+    }
+
+    &__icon {
+        position: relative;
+        width: $input-height;
+        height: $input-height - ($input-border-width * 2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: color .2s $bezier;
+    }
+
+    &__content {
+        flex: 1;
+        position: relative;
+
+        &::before {
+            content: '';
+            display: block;
+            position: absolute;
+            left: 0;
+            top: 20%;
+            width: 1px;
+            height: 60%;
+            background: $black;
+            z-index: 1;
+            transition: background .2s $bezier;
+        }
+
+        input {
+            position: relative;
+            height: $input-height - ($input-border-width * 2);
+            width: 100%;
+            padding-left: 20px;
+            border: none;
+            font-size: 16px;
+        }
+    }
+
+    &__loading-indicator {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: $input-height;
+        height: 100%;
+        background: $white;
+        display: none;
+
+        @include loadingIndicator(0.3 * $input-height, 4px, .4s);
+
+        &--shown {
+            display: block;
+        }
+    }
+
+    &__error-list {
+        background: $red;
+        color: $white;
+        padding: 5px 10px;
+        display: none;
+    }
+
+    &--focused {
+        border-color: $blue;
+    }
+
+    &--focused & {
+        &__icon {
+            color: $blue;
+        }
+
+        &__content::before {
+            background: $blue;
+        }
+    }
+
+    &--fluid {
+        width: 100%;
+    }
+
+    &--invalid {
+        border-color: $red;
+
+        input {
+            color: $red;
+
+            &::-webkit-input-placeholder {
+                color: $red;
+            }
+        }
+    }
+
+    &--invalid & {
+        &__icon {
+            color: $red;
+        }
+
+        &__content::before {
+            background: $red;
+        }
+
+        &__error-list {
+            display: block;
+        }
+    }
+
+
+    &--valid {
+        border-color: $green;
+
+        input {
+            color: $green;
+        }
+    }
+
+    &--valid & {
+        &__icon {
+            color: $green;
+        }
+
+        &__content::before {
+            background: $green;
+        }
+    }
+}

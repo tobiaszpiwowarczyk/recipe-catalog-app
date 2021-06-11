@@ -1,0 +1,9 @@
+$material-design-icons-font-directory-path: '~material-design-icons-iconfont/dist/fonts/';
+ 
+@import '~material-design-icons-iconfont/src/material-design-icons';
+
+@import '~material-design-icons-iconfont/dist/material-design-icons.css';
+
+@import 'assets/_base';
+@import 'assets/_reset';
+@import 'assets/modules/modules';

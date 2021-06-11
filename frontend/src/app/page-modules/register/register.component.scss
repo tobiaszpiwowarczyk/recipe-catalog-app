@@ -1,0 +1,29 @@
+@import "../../../assets/_variables";
+@import "../../../assets/mixins";
+
+.card {
+    width: $laptop-width;
+
+    @include laptop {
+        width: 100%;
+        margin-top: 0;
+        border-radius: 0;
+    }
+
+    .authorization-card__section__content {
+        display: flex;
+        flex-direction: row;
+
+        .register-section {
+            flex: 1;
+
+            &:first-child {
+                margin-right: 10px;
+            }
+
+            &:last-child {
+                margin-left: 10px;
+            }
+        }
+    }
+}

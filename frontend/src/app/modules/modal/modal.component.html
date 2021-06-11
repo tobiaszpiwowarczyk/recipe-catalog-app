@@ -1,0 +1,24 @@
+<div class="modal-overlay" [@modalOverlayAnimation]="modalStateName">
+    <div class="modal modal--{{modalTypeData?.name | lowercase}}" [@modalAnimation]="modalStateName" [ngStyle]="{'width': width + 'px'}">
+        <div class="modal__section modal__header">
+            <div class="modal__header__icon">
+                <span class="material-icons">{{modalTypeData?.icon}}</span>
+            </div>
+            <div class="modal__header__title">
+                <h3>{{modalTypeData?.title}}</h3>
+            </div>
+            <div class="modal__header__close-btn" (click)="closeModal(false)">
+                <span class="material-icons">close</span>
+            </div>
+        </div>
+        <div class="modal__section modal__content" [class.modal__content--centered]="modalContentCentered">
+            <ng-content></ng-content>
+        </div>
+        <div class="modal__section modal__footer">
+            <app-button-group>
+                <app-button text="OK" (click)="closeModal(true)"></app-button>
+                <app-button text="Anuluj" (click)="closeModal(false)"></app-button>
+            </app-button-group>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+@import "../../../../assets/variables";
+@import "../../../../assets/mixins";
+
+.header-menu-item {
+    position: relative;
+    height: $header_height;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    cursor: pointer;
+    text-decoration: none;
+
+    &__icon {
+        display: flex;
+        padding-right: 10px;
+
+        .material-icons {
+            font-size: 30px;
+        }
+    }
+
+    @include hoverLayer(rgba($blue, 0.2));
+}

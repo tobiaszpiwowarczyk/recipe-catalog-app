@@ -1,0 +1,13 @@
+@import '../../../assets/variables';
+@import '../../../assets/mixins';
+
+.container {
+    position: relative;
+    height: 100%;
+    width: $container_width;
+    margin: 0 auto;
+
+    @include desktop {
+        width: 100%;
+    }
+}

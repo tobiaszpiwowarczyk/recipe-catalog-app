@@ -1,0 +1,25 @@
+<div class="input"
+     [class.input--focused]="focused"
+     [class.input--fluid]="fluid"
+     [class.input--invalid]="control?.errors && (control.dirty || control.touched)"
+     [class.input--valid]="control?.valid && (control.dirty || control.touched) && showValidState"
+     >
+    <div class="input__section">
+        <div class="input__icon">
+            <span class="material-icons">{{icon}}</span>
+        </div>
+        <div class="input__content">
+            <input [attr.type]="type" 
+                   [attr.placeholder]="placeholder" 
+                   (focus)="focus()" 
+                   (blur)="blur()"
+                   [ngModel]="value"
+                   (ngModelChange)="change($event)"
+                   [disabled]="disabled"
+                   #input/>
+        </div>
+
+        <div class="input__loading-indicator" [class.input__loading-indicator--shown]="loadingIndicatorShown"></div>
+    </div>
+    <div class="input__section input__error-list">{{errorMessage?.message}}</div>
+</div>

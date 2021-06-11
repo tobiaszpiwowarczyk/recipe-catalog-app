@@ -1,0 +1,50 @@
+@import "../../../../../assets/variables";
+@import "../../../../../assets/mixins";
+
+.button {
+    position: relative;
+    height: $button-height;
+    background: $blue;
+    color: $white;
+    border: none;
+    border-radius: $border-radius;
+    font: {
+        size: 16px;
+        weight: 900;
+    };
+    cursor: pointer;
+    display: flex;
+    align-items: stretch;
+    box-shadow: 0 2px 10px rgba($black, 0.2);
+
+    &:not([disabled]) {
+        @include hoverLayer(rgba($white, 0.2));
+    }
+
+    &__content {
+        position: relative;
+        padding: 0 2.2em;
+        line-height: $button-height;
+    }
+
+    &--iconic {
+        position: relative;
+    }
+
+    &--iconic & {
+        &__icon {
+            position: relative;
+            width: $button-height;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba($black, 0.2);
+        }
+    }
+
+    &[disabled] {
+        background: $lightGray;
+        cursor: default;
+    }
+}

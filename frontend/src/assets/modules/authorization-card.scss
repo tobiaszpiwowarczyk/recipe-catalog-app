@@ -1,0 +1,48 @@
+@import '../variables';
+@import '../mixins';
+
+.authorization-card {
+    position: relative;
+    width: $mobile-width;
+    margin: 0 auto, {
+        top: 50px;
+    };
+
+    &__section {
+        position: relative;
+        width: 100%;
+        padding: 30px;
+        border-bottom: 1px solid rgba($gray, 0.3);
+        display: flex;
+        flex-direction: column;
+
+        &__header,
+        &__footer {
+            align-items: center;
+        }
+
+        &__login-error {
+            text-align: center;
+            color: $red;
+            display: none;
+
+            &--shown {
+                display: block;
+            }
+        }
+
+        &__footer {
+            border-bottom: none;
+
+            p {
+                margin-top: 20px;
+            }
+        }
+    }
+
+    @include mobile {
+        width: 100%;
+        margin-top: 0;
+        border-radius: 0;
+    }
+}

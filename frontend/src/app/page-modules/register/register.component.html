@@ -1,0 +1,31 @@
+<div class="card authorization-card">
+    <div class="authorization-card__section authorization-card__section__header">
+        <h2>Zarejestruj się</h2>
+    </div>
+    <form [formGroup]="registerForm" (ngSubmit)="register()">
+        <div class="authorization-card__section authorization-card__section__content">
+            <div class="register-section">
+                <app-input formControlName="username" [control]="registerForm?.controls['username']"
+                    placeholder="Nazwa użytkownika..." icon="person" appInputFluid appInputAutofocus></app-input>
+                <app-input formControlName="password" [control]="registerForm?.controls['password']"
+                    placeholder="Hasło..." icon="enhanced_encryption" type="password" appInputFluid></app-input>
+            </div>
+            <div class="register-section">
+                <app-input formControlName="firstName" [control]="registerForm?.controls['firstName']"
+                    placeholder="Imię..." icon="drive_file_rename_outline" appInputFluid></app-input>
+                <app-input formControlName="lastName" [control]="registerForm?.controls['lastName']"
+                    placeholder="Nazwisko..." icon="drive_file_rename_outline" appInputFluid></app-input>
+                <app-input formControlName="emailAddress" [control]="registerForm?.controls['emailAddress']"
+                    placeholder="Adres e-mail..." icon="drive_file_rename_outline" appInputFluid></app-input>
+            </div>
+        </div>
+        <div class="authorization-card__section authorization-card__section__footer">
+            <app-button text="Zarejestruj się" appButtonIconic="person_add_alt_1" [disabled]="registerButtonDisabled"></app-button>
+        </div>
+    </form>
+</div>
+
+<app-modal (onClose)="login()" [type]="modalType" appModalContentCentered #modal>
+    Rejestracja zakończyła się pomyślnie
+</app-modal>
+<app-loading-spinner #spinner></app-loading-spinner>

@@ -1,0 +1,102 @@
+@import '../../../assets/variables';
+@import '../../../assets/mixins';
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba($black, 0.6);
+    z-index: $modal-z-index;
+
+    .modal {
+        position: absolute;
+        top: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: $white;
+        border-radius: $border-radius;
+        box-shadow: 0 2px 10px rgba(0,0,0,.2);
+        overflow: hidden;
+
+        &__section {
+            position: relative;
+            width: 100%;
+            border-bottom: 1px solid rgba($black, 0.1);
+
+            &:last-child {
+                border-bottom: none;
+            }
+        }
+
+        &__header {
+            position: relative;
+            height: $modal-header-height;
+            display: flex;
+            justify-content: space-between;
+
+            &__icon,
+            &__close-btn {
+                position: relative;
+                width: $modal-header-height;
+                height: $modal-header-height;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            &__icon {
+                border-right: 1px solid rgba($black, 0.1);
+            }
+
+            &__close-btn {
+                border-left: 1px solid rgba($black, 0.1);
+                cursor: pointer;
+                transition: all .2s $bezier;
+
+                &:hover {
+                    color: $red;
+                }
+
+                @include hoverLayer(rgba($blue, 0.1));
+            }
+
+            &__title {
+                flex: 1;
+                text-align: center;
+                line-height: $modal-header-height;
+            }
+        }
+
+        &__content,
+        &__footer {
+            padding: 20px;
+        }
+
+        &__content {
+            &--centered {
+                display: flex;
+                justify-content: center;
+            }
+        }
+
+        &__footer {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+
+        &--info {
+            .modal__header__icon {
+                color: $blue;
+            }
+        }
+
+        &--success {
+            .modal__header__icon {
+                color: $green;
+            }
+        }
+    }
+}

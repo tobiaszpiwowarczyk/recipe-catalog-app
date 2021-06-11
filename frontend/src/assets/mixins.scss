@@ -1,0 +1,75 @@
+@import "_variables";
+
+@mixin desktop {
+    @media all and (max-width: $container_width) {
+        @content;
+    }
+}
+
+@mixin laptop {
+    @media all and (max-width: $laptop-width) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media all and (max-width: $tablet-width) {
+        @content;
+    }
+}
+
+@mixin mobile {
+    @media all and (max-width: $mobile-width) {
+        @content;
+    }
+}
+
+@mixin hoverLayer($background) {
+    z-index: 1;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 0;
+        background: $background;
+        z-index: -1;
+        transition: .2s $bezier;
+    }
+
+    &:hover::before {
+        height: 100%;
+    }
+}
+
+@mixin loadingIndicator($width, $border-width, $spin-time: 1s, $color: $black) {
+    &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(0);
+        width: $width;
+        height: $width;
+        border: $border-width solid $color, {
+            radius: $width;
+            top-color: transparent;
+            bottom-color: transparent;
+        };
+        animation: spinnerRotate $spin-time linear infinite;
+    }
+
+    @keyframes spinnerRotate {
+        from {
+            transform: translate(-50%, -50%) rotate(0);
+        }
+        to {
+            transform: translate(-50%, -50%) rotate(360deg);
+        }
+    }
+}

@@ -1,0 +1,24 @@
+<div class="card authorization-card">
+    <div class="authorization-card__section authorization-card__section__header">
+        <h2>Zaloguj się</h2>
+    </div>
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <div class="authorization-card__section">
+            <app-input formControlName="username" [showValidState]="false" [control]="loginForm?.controls['username']" 
+                placeholder="Nazwa użytkownika..." icon="person" appInputFluid appInputAutofocus #username>
+            </app-input>
+            <app-input formControlName="password" [showValidState]="false" [control]="loginForm?.controls['password']" 
+                placeholder="Hasło..." icon="enhanced_encryption" type="password" appInputFluid>
+            </app-input>
+        </div>
+        <div class="authorization-card__section authorization-card__section__login-error" [class.authorization-card__section__login-error--shown]="loginError">
+            <p>Nazwa użytkownika lub hasło jest nieprawidłowe</p>
+        </div>
+        <div class="authorization-card__section authorization-card__section__footer">
+            <app-button text="Zaloguj się" appButtonIconic="login" [disabled]="loginButtonDisabled"></app-button>
+            <p>Jeżeli nie posiadasz konta, <a [routerLink]="['/register']">Zarejestruj się</a></p>
+        </div>
+    </form>
+</div>
+
+<app-loading-spinner #spinner></app-loading-spinner>

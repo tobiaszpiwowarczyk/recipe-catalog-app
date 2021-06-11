@@ -1,0 +1,15 @@
+<div class="header">
+    <app-container>
+        <div class="header__wrapper">
+            <a [routerLink]="['/']" class="brand">
+                <h3>Książka kulinarna</h3>
+            </a>
+
+            <app-header-menu>
+                <app-header-menu-item *ngIf="isLogged" [text]="fullName" icon="person"></app-header-menu-item>
+                <app-header-menu-item *ngIf="isLogged" text="Wyloguj się" icon="logout" (click)="logout()"></app-header-menu-item>
+                <app-header-menu-item *ngIf="!isLogged" text="Zaloguj się" [href]="['/login']" icon="login"></app-header-menu-item>
+            </app-header-menu>
+        </div>
+    </app-container>
+</div>
