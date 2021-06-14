@@ -7,8 +7,10 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class HeaderMenuItemComponent implements OnInit {
 
+  withLink: boolean = false;
+  href: any[] = [];
+
   @Input() text: string = "";
-  @Input() href: any[] = [];
   @Input() icon: string = "";
 
   constructor() { }

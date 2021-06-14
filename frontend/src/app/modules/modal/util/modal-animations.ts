@@ -1,6 +1,6 @@
 import { animate, animateChild, group, query, state, style, transition, trigger } from "@angular/animations";
+import { bezier } from "src/app/util/animation-utils";
 
-const bezier = "cubic-bezier(0,.8,.2,1)";
 export const MODAL_ANIMATION_TIME = 500;
 
 export const modalAnimation = trigger("modalAnimation", [

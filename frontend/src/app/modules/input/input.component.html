@@ -5,7 +5,7 @@
      [class.input--valid]="control?.valid && (control.dirty || control.touched) && showValidState"
      >
     <div class="input__section">
-        <div class="input__icon">
+        <div class="input__icon" *ngIf="icon != ''">
             <span class="material-icons">{{icon}}</span>
         </div>
         <div class="input__content">
@@ -21,5 +21,5 @@
 
         <div class="input__loading-indicator" [class.input__loading-indicator--shown]="loadingIndicatorShown"></div>
     </div>
-    <div class="input__section input__error-list">{{errorMessage?.message}}</div>
+    <div class="input__section input__error-list" *ngIf="errorMessage != null">{{errorMessage?.message}}</div>
 </div>

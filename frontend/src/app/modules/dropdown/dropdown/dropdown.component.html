@@ -1,0 +1,28 @@
+<div class="dropdown" 
+     [class.dropdown--opened]="opened"
+     [class.dropdown--imaged]="imaged"
+     [class.dropdown--fluid]="fluid"
+>
+    <div class="dropdown__label" *ngIf="labelText != ''">
+        <h6>{{labelText}}</h6>
+    </div>
+    <div class="dropdown__widget">
+        <div class="dropdown__content" (click)="opened = !opened">
+            <div class="dropdown__content__image" *ngIf="imaged">
+                <img [attr.src]="dropdownData?.selectedItem?.image" />
+            </div>
+            <div class="dropdown__content__label">
+                <h6>{{dropdownData?.selectedItem?.content}}</h6>
+            </div>
+            <div class="dropdown__content__indicator">
+                <div class="material-icons">{{opened ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}}</div>
+            </div>
+        </div>
+        <div class="dropdown__item-list" [@dropdownItemListAnimation]="opened ? 'show' : 'hide'" *ngIf="items?.length == 0">
+            <ng-content></ng-content>
+        </div>
+        <div class="dropdown__item-list" [@dropdownItemListAnimation]="opened ? 'show' : 'hide'" *ngIf="items?.length > 0">
+            <app-dropdown-item *ngFor="let item of items; last as isLast" [data]="item" [noBorder]="isLast"></app-dropdown-item>
+        </div>
+    </div>
+</div>

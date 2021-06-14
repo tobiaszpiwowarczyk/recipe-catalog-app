@@ -26,9 +26,11 @@ export class HeaderComponent implements OnInit {
 
 
   logout(): void {
-    this.ls.logout().subscribe(res => {
-      if (res.logout)
+    this.ls.logout()
+    .subscribe(res => {
+      if (res.logout) {
         window.location.reload();
+      }
     })
   }
 }

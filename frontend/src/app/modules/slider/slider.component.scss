@@ -1,0 +1,60 @@
+@import "../../../assets/variables";
+@import "../../../assets/mixins";
+
+.slider {
+    position: relative;
+
+    &__label {
+        position: relative;
+        margin-bottom: 10px;
+    }
+
+    &__content {
+        position: relative;
+        width: 100%;
+        display: flex;
+    }
+
+    &__widget {
+        position: relative;
+        height: $input-height;
+        flex: 1;
+        @include flexCenter;
+
+        input {
+            position: relative;
+            width: 100%;
+            height: 20px;
+            border: $input-border-width solid $black, {
+                radius: 20px;
+            };
+            background: $white;
+            -webkit-appearance: none;
+            appearance: none;
+
+            &::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                appearance: none;
+                background: $blue;
+                width: 30px;
+                height: 30px;
+                border: $input-border-width solid $black, {
+                    radius: 30px;
+                };
+                cursor: pointer;
+                transition: all .2s $bezier;
+
+                &:hover {
+                    background: lighten($blue, 10%);
+                }
+            }
+        }
+    }
+
+    &__data {
+        position: relative;
+        width: $input-height;
+        height: $input-height;
+        @include flexCenter;
+    }
+}

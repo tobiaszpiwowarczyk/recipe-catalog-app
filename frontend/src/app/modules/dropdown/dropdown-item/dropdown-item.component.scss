@@ -1,0 +1,46 @@
+@import "../../../../assets/variables";
+@import "../../../../assets/mixins";
+
+.dropdown-item {
+    position: relative;
+    width: 100%;
+    height: $input-height;
+    cursor: pointer;
+    border-bottom: 1px solid rgba($black, 0.2);
+    display: flex;
+
+    @include hoverLayer(rgba($black, 0.1));
+
+    &__content {
+        position: relative;
+        flex: 1;
+        padding-left: $input-left-padding;
+        display: flex;
+        align-items: center;
+    }
+
+    &--no-border {
+        border-bottom: none;
+    }
+
+    &--active {
+        font-weight: bold;
+    }
+
+    &--imaged & {
+        &__image {
+            position: relative;
+            width: $input-height;
+            height: 100%;
+            @include flexCenter;
+
+            img {
+                width: 0.5 * $input-height;
+            }
+        }
+
+        &__content {
+            padding-left: 0;
+        }
+    }
+}

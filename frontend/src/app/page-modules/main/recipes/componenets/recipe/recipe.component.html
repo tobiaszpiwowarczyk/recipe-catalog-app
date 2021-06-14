@@ -1,0 +1,57 @@
+<a [routerLink]="['/recipe-data']" [queryParams]="{id: data?.id}" class="recipe card" @recipeListItemAnimation [@recipeListItemHoverAnimation]="hoverState">
+    <div class="recipe__image" [style.background-image]="'url('+ data?.imagePath +')'">
+        <div class="recipe__image__statistics">
+            <div class="recipe__image__statistics__item recipe__image__statistics__item__difficulty-{{data?.levelOfDifficulty}}">
+                <div class="recipe__image__statistics__item__icon">
+                    <div class="material-icons">insert_chart</div>
+                </div>
+                <div class="recipe__image__statistics__item__content">
+                    {{data?.levelOfDifficulty}}
+                </div>
+            </div>
+            <div class="recipe__image__statistics__item recipe__image__statistics__item__time">
+                <div class="recipe__image__statistics__item__icon">
+                    <div class="material-icons">timer</div>
+                </div>
+                <div class="recipe__image__statistics__item__content">
+                    {{data.creationTime}} min
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="recipe__content">
+        <div class="recipe__title">
+            <h4>{{data?.name}}</h4>
+        </div>
+        <div class="recipe__data">
+            <div class="recipe__data__item__wrapper">
+                <div class="recipe__data__item">
+                    <div class="recipe__data__item__icon">
+                        <div class="material-icons">person</div>
+                    </div>
+                    <div class="recipe__data__item__content">
+                        {{data?.user?.firstName}} {{data?.user?.lastName}}
+                    </div>
+                </div>
+            </div>
+            <div class="recipe__data__item__wrapper">
+                <div class="recipe__data__item">
+                    <div class="recipe__data__item__icon">
+                        <div class="material-icons">star_half</div>
+                    </div>
+                    <div class="recipe__data__item__content">
+                        {{data?.rating | number : '1.2-2'}} ({{data?.ratingCount}})
+                    </div>
+                </div>
+                <div class="recipe__data__item">
+                    <div class="recipe__data__item__icon">
+                        <div class="material-icons">mode_comment</div>
+                    </div>
+                    <div class="recipe__data__item__content">
+                        {{data?.commentCount}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</a>

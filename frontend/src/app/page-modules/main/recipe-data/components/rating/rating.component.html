@@ -1,0 +1,16 @@
+<div class="rating card">
+    <div class="rating__section rating__indicators">
+        <div *ngFor="let x of data" 
+             class="rating__indicator"
+             [class.rating__indicator--hovered]="x.hovered"
+             (mouseover)="highlightStar(x.index, true)" 
+             (mouseleave)="highlightStar(x.index, false)"
+             (click)="applyRating(x.index)"
+        >
+            <div class="material-icons">{{x.applied ? 'star_rate' : 'star_outline'}}</div>
+        </div>
+    </div>
+    <div class="rating__section rating__data">
+        <span>{{value}}</span>
+    </div>
+</div>

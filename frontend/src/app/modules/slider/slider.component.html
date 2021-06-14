@@ -1,0 +1,13 @@
+<div class="slider">
+    <div class="slider__label" *ngIf="labelText != ''">
+        <h6>{{labelText}}</h6>
+    </div>
+    <div class="slider__content">
+        <div class="slider__widget">
+            <input type="range" [attr.min]="min" [attr.max]="max" step="1" [ngModel]="value" (ngModelChange)="change($event)" />
+        </div>
+        <div class="slider__data">
+            <h5>{{value}}</h5>
+        </div>
+    </div>
+</div>

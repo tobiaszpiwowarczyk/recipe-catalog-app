@@ -10,8 +10,8 @@ import { User } from './user/User';
 })
 export class LoginService extends AbstractService {
 
-  private static readonly ACCESS_TOKEN: string = "accessToken";
-  private static readonly AUTHORIZATION: string = "Authorization";
+  public static readonly ACCESS_TOKEN: string = "accessToken";
+  public static readonly AUTHORIZATION: string = "Authorization";
 
   constructor(protected http: HttpClient) {
     super(http);

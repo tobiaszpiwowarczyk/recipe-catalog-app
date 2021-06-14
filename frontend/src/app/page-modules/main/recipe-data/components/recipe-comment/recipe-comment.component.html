@@ -1,0 +1,38 @@
+<div class="recipe-comment card">
+    <div class="recipe-comment__section recipe-comment__header">
+        <h3>{{data?.user?.firstName}} {{data?.user?.lastName}}</h3>
+    </div>
+    <div class="recipe-comment__section recipe-comment__content">
+        {{data?.content}}
+    </div>
+    <div class="recipe-comment__section recipe-comment__footer">
+        <div class="recipe-comment__section__column">
+            <div class="recipe-comment__additional-data">
+                <div class="recipe-comment__additional-data__icon">
+                    <div class="material-icons">date_range</div>
+                </div>
+                <div class="recipe-comment__additional-data__content">
+                    {{data.createdDate | date:'dd MMMM yyyy, HH:mm:ss'}}
+                </div>
+            </div>
+        </div>
+        <div class="recipe-comment__section__column">
+            <div class="recipe-comment__additional-data">
+                <div class="recipe-comment__additional-data__icon">
+                    <div class="material-icons">thumb_up</div>
+                </div>
+                <div class="recipe-comment__additional-data__content">
+                    {{data?.likes}}
+                </div>
+            </div>
+            <div class="recipe-comment__additional-data">
+                <div class="recipe-comment__additional-data__icon">
+                    <div class="material-icons">thumb_down</div>
+                </div>
+                <div class="recipe-comment__additional-data__content">
+                    {{data?.dislikes}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

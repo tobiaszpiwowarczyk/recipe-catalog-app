@@ -1,6 +1,5 @@
-import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
 import { ErrorMessage } from './validator/ErrorMessage';
 import { ErrorMessageFactory } from './validator/ErrorMessageFactory';
 
@@ -10,8 +9,7 @@ import { ErrorMessageFactory } from './validator/ErrorMessageFactory';
   styleUrls: ['./input.component.scss'],
   providers: [
     { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => InputComponent), multi: true }
-  ],
-  changeDetection: ChangeDetectionStrategy.Default
+  ]
 })
 export class InputComponent implements OnInit, ControlValueAccessor {
 
@@ -38,13 +36,14 @@ export class InputComponent implements OnInit, ControlValueAccessor {
   }
 
   ngOnInit(): void {
+    if (this.control != null) {
+      this.control.statusChanges.subscribe(res => {
+        this.loadingIndicatorShown = res == "PENDING";
 
-    this.control.statusChanges.subscribe(res => {
-      this.loadingIndicatorShown = res == "PENDING";
-      
-      if (res == "INVALID")
-        this.errorMessage = this.errorMessageFactory.getErrorMessage(this.control.errors);
-    });
+        if (res == "INVALID")
+          this.errorMessage = this.errorMessageFactory.getErrorMessage(this.control.errors);
+      });
+    }
   }
 
 

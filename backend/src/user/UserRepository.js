@@ -30,6 +30,24 @@ class UserRepository extends AbstractRepository {
 
     return res;
   }
+
+  findByRecipeCatalogId = async recipeCatalogId => {
+    return (await this.pool.query(`
+      SELECT
+          -1 as id
+        , 'Wszyscy' as first_name
+        , 'Wszyscy' as last_name
+      UNION
+      SELECT
+          u.id
+        , u.first_name
+        , u.last_name
+      FROM users u
+      JOIN recipe r on r.user_id = u.id
+      WHERE r.catalog_id = ${recipeCatalogId}
+      ORDER BY id
+    `)).rows.map(x => this.prepareFields(x));
+  }
 }
 
 module.exports = UserRepository;

@@ -18,4 +18,7 @@ export class UserService extends AbstractService {
 
   public createUser = (user: User): Observable<User> =>
     this.http.post<User>("/api/user", JSON.stringify(user), { headers: this.headers });
+
+  public findByRecipeCatalogId = (recipeCatalogId: number): Observable<User[]> =>
+    this.http.get<User[]>(`/api/user/recipe-catalog/${recipeCatalogId}`, { headers: this.headers });
 }

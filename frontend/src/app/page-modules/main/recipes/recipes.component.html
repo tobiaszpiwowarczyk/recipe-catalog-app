@@ -1,0 +1,43 @@
+<div class="recipes-list" [style.visibility]="loading ? 'collapse' : 'visible'">
+    <div class="recipes-list__section recipes-list__filters">
+        <div class="recipes-list__section__header">
+            <div class="recipes-list__section__header__image">
+                <div class="material-icons">filter_list_alt</div>
+            </div>
+            <h3>Filtry</h3>
+        </div>
+        <div class="recipes-list__section__content">
+            <form [formGroup]="filtersForm">
+                <div class="recipes-list__filters__filter-element">
+                    <app-dropdown formControlName="recipeCatalog" [control]="filtersForm.controls['recipeCatalog']" 
+                                  labelText="Rodzaj potrawy" appDropdownFluid appDropdownImaged #recipeCatalogFilter></app-dropdown>
+                </div>
+                <div class="recipes-list__filters__filter-element">
+                    <app-slider formControlName="levelOfDifficulty" [control]="filtersForm.controls['levelOfDifficulty']" 
+                                labelText="Poziom trudności" appSliderTriggerOnMouseleave #levelOfDifficultySlider></app-slider>
+                </div>
+                <div class="recipes-list__filters__filter-element">
+                    <app-dropdown formControlName="author" [control]="filtersForm.controls['author']" labelText="Autor" appDropdownFluid
+                        #authorFilter></app-dropdown>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="recipes-list__section recipes-list__content">
+        <div class="recipes-list__section__header">
+            <div class="recipes-list__section__header__image">
+                <img [attr.src]="recipeCatalog?.imageName" [attr.alt]="recipeCatalog?.name" />
+            </div>
+            <h2>{{recipeCatalog?.name}}</h2>
+        </div>
+        <div class="recipes-list__section__content" *ngIf="recipeList.length == 0 && !recipeListLoading">
+            <h3 align="center">Nie udało się znaleść przepisów według kryteriów</h3>
+        </div>
+        <div class="recipes-list__section__content recipes-list__section__recipe-list" *ngIf="recipeList.length > 0 && !recipeListLoading"
+             [@recipeListAnimation]="loading ? 'hide' : 'show'">
+            <app-recipe *ngFor="let recipe of recipeList" [data]="recipe"></app-recipe>
+        </div>
+    </div>
+</div>
+
+<app-loading-spinner [shown]="loading" #spinner></app-loading-spinner>

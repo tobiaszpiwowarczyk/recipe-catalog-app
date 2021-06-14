@@ -1,1 +1,3 @@
-<div class="loading-spinner" [class.loading-spinner--shown]="shown"></div>
+<div class="loading-spinner" [@loadingSpinnerShowAnimation]="shown ? 'show' : 'hide'">
+    <div class="loading-spinner__widget" [@loadingSpinnerWidgetAnimation]="shown ? 'show' : 'hide'"></div>
+</div>

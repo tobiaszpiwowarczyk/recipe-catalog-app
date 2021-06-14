@@ -1,0 +1,27 @@
+@import "../../../../../../assets/variables";
+@import "../../../../../../assets/mixins";
+
+.recipe-catalog {
+    position: relative;
+    width: $recipe-catalog-width;
+    height: $recipe-catalog-height;
+    display: block;
+    cursor:  pointer;
+    color: $black;
+
+    &__image,
+    &__title {
+        @include flexCenter;
+    }
+
+    &__image {
+        position: relative;
+        width: 100%;
+        height: $recipe-catalog-width;
+        border-bottom: 1px solid rgba($black, 0.3);
+    }
+
+    &__title {
+        height: $recipe-catalog-height - $recipe-catalog-width;
+    }
+}

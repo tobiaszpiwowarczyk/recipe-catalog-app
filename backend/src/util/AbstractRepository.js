@@ -31,16 +31,23 @@ class AbstractRepository {
 
   prepareFields = object => {
     var res = {};
-    Object.keys(object).forEach(x => res[ValueUtils.toCamelCase(x)] = object[x]);
+    Object.keys(object).forEach(x => {
+      if (Array.isArray(object[x])) {
+        res[ValueUtils.toCamelCase(x)] = object[x].map(y => this.prepareFields(y));
+      }
+      else {
+        res[ValueUtils.toCamelCase(x)] = typeof object[x] == "object" && !(object[x] instanceof Date) ? this.prepareFields(object[x]) : object[x];
+      }
+    });
     return res;
   }
 
   getFieldMapping = () => new Object({});
   getValueMapping = (obj) => new Object({});
 
-  findAll = async () => (await this.pool.query("SELECT * FROM " + this.tableName)).rows;
+  findAll = async () => (await this.pool.query("SELECT * FROM " + this.tableName)).rows.map(x => this.prepareFields(x));
 
-  create = async (object) => (await this.pool.query(`INSERT INTO ${this.tableName}(${this.getDatabaseFields(object)}) VALUES (${this.getDatabaseValues(object)}) RETURNING *`)).rows[0];
+  create = async (object) => this.prepareFields((await this.pool.query(`INSERT INTO ${this.tableName}(${this.getDatabaseFields(object)}) VALUES (${this.getDatabaseValues(object)}) RETURNING *`)).rows[0]);
 
   existsByField = async (fieldName, value) => 
     (await this.pool.query(`SELECT EXISTS(SELECT * FROM ${this.tableName} WHERE ${ValueUtils.toKebabCase(fieldName)} = ${ValueUtils.addQuotes(value)})`)).rows[0];

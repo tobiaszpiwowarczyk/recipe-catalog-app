@@ -9,11 +9,14 @@
     bottom: 0;
     background: rgba($black, 0.6);
     z-index: $loading-spinner-z-index;
-    display: none;
 
-    @include loadingIndicator($loading-spinner-width, 10px, 1s, $white);
-
-    &--shown {
-        display: block;
+    &__widget {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: $loading-spinner-width;
+        height: $loading-spinner-width;
+        @include loadingIndicator($loading-spinner-width, 10px, 1s, $white);
     }
 }

@@ -10,17 +10,20 @@ class UserController extends AbstractController {
     }
 
     init() {
-        this.app.get('/api/user', this.findAll);
+        this.app.get('/api/user/recipe-catalog/:recipeCatalogId', this.findByRecipeCatalogId);
         this.app.post('/api/user', this.createUser);
         this.app.post('/api/user/validate', this.validateUser);
     }
 
-    findAll = async (req, res) => res.json(await this.#userRepository.findAll());
+    
     createUser = async (req, res) => {
         req.body.role = {id: 1};
         return res.json(await this.#userRepository.create(req.body));
     }
+
     validateUser = async (req, res) => res.json(await this.#userRepository.existsByField(req.query.field, req.body[req.query.field]));
+
+    findByRecipeCatalogId = async (req, res) => res.json(await this.#userRepository.findByRecipeCatalogId(req.params.recipeCatalogId));
 }
 
 module.exports = UserController;

@@ -1,0 +1,8 @@
+<a class="recipe-catalog card" [routerLink]="['/recipes']" [queryParams]="{catalogId: catalogData?.id}" @recipeCatalogCardAnimation [@recipeCatalogHoverAnimation]="hoverState">
+    <div class="recipe-catalog__image">
+        <img [attr.src]="catalogData?.imageName" />
+    </div>
+    <div class="recipe-catalog__title">
+        <h3>{{catalogData?.name}}</h3>
+    </div>
+</a>

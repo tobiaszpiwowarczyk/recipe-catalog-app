@@ -1,1 +1,15 @@
-<h1>Witamy na stronie głównej</h1>
+<div class="home" *ngIf="!loading">
+    <div *ngIf="recipeCatalogs?.length > 0; else noRecipeCatalogs">
+        <h1 align="center">Rodzaje potraw</h1>
+    
+        <div class="recipe-catalogs" [@homeAnimation]="'show'">
+            <app-recipe-catalog *ngFor="let catalog of recipeCatalogs" [catalogData]="catalog"></app-recipe-catalog>
+        </div>
+    </div>
+    
+    <ng-template #noRecipeCatalogs>
+        <h1 align="center">W tej chwili nie ma żadnych katalogów</h1>
+    </ng-template>
+</div>
+
+<app-loading-spinner [shown]="loading"></app-loading-spinner>

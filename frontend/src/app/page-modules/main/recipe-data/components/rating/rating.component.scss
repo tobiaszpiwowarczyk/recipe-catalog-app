@@ -1,0 +1,40 @@
+@import "../../../../../../assets/mixins";
+
+.rating {
+    position: relative;
+    display: flex;
+
+    &__section {
+        padding: 0 10px;
+    }
+
+    &__indicators {
+        position: relative;
+        height: 100%;
+        display: flex;
+    }
+    
+    &__indicator {
+        position: relative;
+        width: 25px;
+        height: 35px;
+        @include flexCenter;
+        cursor: pointer;
+
+        &--hovered {
+            color: mix($yellow, $red, 50%);
+        }
+
+        .material-icons {
+            font-size: 24px;
+        }
+    }
+
+    &__data {
+        position: relative;
+        display: flex;
+        align-items: center;
+        border-left: 1px solid rgba($black, 0.2);
+        font-size: 14px;
+    }
+}

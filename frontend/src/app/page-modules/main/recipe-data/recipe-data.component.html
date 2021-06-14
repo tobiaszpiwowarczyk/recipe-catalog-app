@@ -1,0 +1,110 @@
+<div class="recipe-data" *ngIf="!loading">
+    <div class="recipe-data__section">
+        <div class="recipe-data__column">
+            <div class="recipe-data__column__image">
+                <div class="recipe-data__column__image__widget" [style.background-image]="'url('+ recipeData?.imagePath +')'"></div>
+                <div class="recipe-data__column__image__statistics">
+                    <div class="recipe-data__column__image__statistics__item recipe-data__column__image__statistics__item__difficulty-{{recipeData?.levelOfDifficulty}}">
+                        <div class="recipe-data__column__image__statistics__item__icon">
+                            <div class="material-icons">insert_chart</div>
+                        </div>
+                        <div class="recipe-data__column__image__statistics__item__content">
+                            {{recipeData?.levelOfDifficulty}}
+                        </div>
+                    </div>
+                    <div class="recipe-data__column__image__statistics__item recipe-data__column__image__statistics__item__time">
+                        <div class="recipe-data__column__image__statistics__item__icon">
+                            <div class="material-icons">timer</div>
+                        </div>
+                        <div class="recipe-data__column__image__statistics__item__content">
+                            {{recipeData.creationTime}} min
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-data__column__image__rating" *ngIf="loggedIn">
+                    <form [formGroup]="ratingForm">
+                        <app-rating formControlName="rating" [control]="ratingForm.controls['rating']"></app-rating>
+                    </form>
+                </div>
+            </div>
+            <div class="recipe-data__column__card card">
+                <div class="recipe-data__column__card__section">
+                    <h3>Składniki</h3>
+                </div>
+                <div class="recipe-data__column__card__section">
+                    <ul class="recipe-data__column__card__section__list">
+                        <li *ngFor="let item of recipeData?.ingredients">{{item.name}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="recipe-data__column">
+            <div class="recipe-data__column__header">
+                <div class="recipe-data__column__title">
+                    <div class="recipe-data__column__title__image">
+                        <img [attr.src]="recipeData?.catalog?.imageName" [attr.alt]="recipeData?.catalog?.name" />
+                    </div>
+                    <h2>{{recipeData?.name}}</h2>
+                </div>
+            </div>
+            <div class="recipe-data__column__content">
+                <div class="recipe-data__column__card card recipe-data__column__card--fluid">
+                    <div class="recipe-data__column__card__section">
+                        <div class="recipe-data__column__additional-data">
+                            <div class="recipe-data__column__additional-data__icon">
+                                <div class="material-icons">person</div>
+                            </div>
+                            <div class="recipe-data__column__additional-data__content">
+                                {{recipeData?.user?.firstName}} {{recipeData?.user?.lastName}}
+                            </div>
+                        </div>
+                        <div class="recipe-data__column__additional-data">
+                            <div class="recipe-data__column__additional-data__icon">
+                                <div class="material-icons">date_range</div>
+                            </div>
+                            <div class="recipe-data__column__additional-data__content">
+                                {{recipeData?.createdDate | date:'yyyy-MM-dd hh:mm:ss'}}
+                            </div>
+                        </div>
+                        <div class="recipe-data__column__additional-data">
+                            <div class="recipe-data__column__additional-data__icon">
+                                <div class="material-icons">star_half</div>
+                            </div>
+                            <div class="recipe-data__column__additional-data__content">
+                                {{(ratingData?.recipe?.rating || recipeData.rating) | number: '1.2'}} 
+                                (liczba ocen: {{ratingData?.recipe?.ratingAmmount || recipeData?.ratingCount}})
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-data__column__card card recipe-data__column__card--fluid">
+                    <div class="recipe-data__column__card__section">
+                        <h3>Sposób przygotowania</h3>
+                    </div>
+                    <div class="recipe-data__column__card__section recipe-data__column__card__description">
+                        <p *ngFor="let sentence of recipeData?.description.split('\\n')">{{sentence}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="recipe-data__section recipe-data__comments">
+        <div class="recipe-data__comments__header">
+            <h2>Komentarze ({{recipeData?.comments.length}})</h2>
+        </div>
+        <div class="recipe-data__comments__form" *ngIf="loggedIn">
+            <form [formGroup]="commentsForm" (ngSubmit)="addComment()">
+                <textarea formControlName="comment"></textarea>
+                <app-button text="Dodaj komentarz" appButtonIconic="add_comment" [disabled]="commentsForm.invalid"></app-button>
+            </form>
+        </div>
+        <div class="recipe-data__comments__list" *ngIf="recipeData.comments.length > 0">
+            <app-recipe-comment *ngFor="let comment of recipeData?.comments" [data]="comment"></app-recipe-comment>
+        </div>
+        <div class="recipe-data__comments__list recipe-data__comments__list--no-comments" *ngIf="recipeData.comments.length == 0">
+            <h2>Brak komentarzy na temat tej potrawy</h2>
+        </div>
+    </div>
+</div>
+
+<app-loading-spinner [shown]="loading" #spinner></app-loading-spinner>

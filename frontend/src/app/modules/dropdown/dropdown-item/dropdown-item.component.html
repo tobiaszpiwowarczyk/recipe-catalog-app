@@ -1,0 +1,10 @@
+<div class="dropdown-item" 
+     [class.dropdown-item--no-border]="noBorder"
+     [class.dropdown-item--imaged]="dropdownData?.imaged"
+     [class.dropdown-item--active]="itemActive"
+>
+    <div class="dropdown-item__image" *ngIf="dropdownData?.imaged">
+        <img [attr.src]="data?.image" [attr.alt]="data?.content" />
+    </div>
+    <div class="dropdown-item__content">{{data?.content}}</div>
+</div>

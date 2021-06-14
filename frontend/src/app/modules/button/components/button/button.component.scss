@@ -36,9 +36,7 @@
             position: relative;
             width: $button-height;
             height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            @include flexCenter;
             background: rgba($black, 0.2);
         }
     }
