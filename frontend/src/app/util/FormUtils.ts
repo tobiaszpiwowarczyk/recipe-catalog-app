@@ -6,7 +6,7 @@ export class FormUtils {
     static disableSubmitButton(form: FormGroup): Observable<boolean> {
         return new Observable((observer: Observer<boolean>) => {
             form.statusChanges.subscribe(res => {
-                observer.next(res != "VALID" && Object.values(form.controls).every(x => x.dirty || x.touched));
+                observer.next(res != "VALID" && Object.values(form.controls).some(x => !x.valid && (x.dirty || x.touched)));
             });
         });
     }

@@ -10,7 +10,6 @@ import { TextareaModule } from 'src/app/modules/textarea/textarea.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ModalModule } from 'src/app/modules/modal/modal.module';
 import { LoadingSpinnerModule } from 'src/app/modules/loading-spinner/loading-spinner.module';
-import { PendingChangesGuard } from 'src/app/services/changes/PendingChangesGuard';
 
 
 

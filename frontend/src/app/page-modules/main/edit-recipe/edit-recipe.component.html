@@ -8,7 +8,7 @@
                 <div class="create-recipe__image-preview card" *ngIf="recipeForm.controls['imagePath'].value != ''"
                     [style.background-image]="'url('+ recipeForm.controls['imagePath'].value +')'"></div>
                 <app-input formControlName="imagePath" [control]="recipeForm.controls['imagePath']"
-                    placeholder="Wklej adres URL do obrazka" [showValidState]="false" appInputFluid></app-input>
+                    placeholder="Wklej adres URL do obrazka" [showValidState]="false" appInputFluid appInputAutofocus></app-input>
             </div>
             <div class="create-recipe__property">
                 <app-dropdown formControlName="catalog" [control]="recipeForm.controls['catalog']"

@@ -84,7 +84,6 @@ export class CreateRecipeComponent implements OnInit, AfterViewInit {
       this.recipe.imagePath = res.imagePath;
       this.recipe.levelOfDifficulty = res.levelOfDifficulty;
       this.recipe.creationTime = res.creationTime;
-      console.log(res);
     });
 
     FormUtils.disableSubmitButton(this.recipeForm)
