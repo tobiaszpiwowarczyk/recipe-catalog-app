@@ -14,7 +14,7 @@ class AbstractRepository {
             .filter(x => x != "id" && typeof object[x] != "function" && this.getValueMapping(object)[x] != "")
             .map(key => this.getFieldMapping()[key] || key)
             .map(key => ValueUtils.toKebabCase(key))
-            .join(', ')
+            .join(', ');
   }
 
   getDatabaseValues(object) {
@@ -54,6 +54,11 @@ class AbstractRepository {
 
   findByField = async (fieldName, value) =>
     this.prepareFields((await this.pool.query(`SELECT * FROM ${this.tableName} WHERE ${ValueUtils.toKebabCase(fieldName)} = ${ValueUtils.addQuotes(value)}`)).rows[0]);
+
+  deleteByField = async (fieldName, value) => {
+    (await this.pool.query(`DELETE FROM ${this.tableName} WHERE ${ValueUtils.toKebabCase(fieldName)} = ${ValueUtils.addQuotes(value)}`));
+    return {removed: true};
+  }
 }
 
 module.exports = AbstractRepository;

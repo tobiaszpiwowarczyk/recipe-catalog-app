@@ -31,7 +31,6 @@ export class RecipesComponent implements OnInit {
 
   @ViewChild('recipeCatalogFilter', {static: false}) recipeCatalogFilter: DropdownComponent;
   @ViewChild('authorFilter', { static: false }) authorFilter: DropdownComponent;
-  @ViewChild('levelOfDifficultySlider', { static: false }) levelOfDifficultySlider: SliderComponent;
   @ViewChild(LoadingSpinnerComponent, { static: false }) spinner: LoadingSpinnerModule;
 
   constructor(
@@ -45,14 +44,14 @@ export class RecipesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
-    this.filtersForm = this.fb.group({
-      "recipeCatalog": null,
-      "author": null,
-      "levelOfDifficulty": 1
-    });
-
     this.route.queryParams.subscribe(x => {
+
+      this.filtersForm = this.fb.group({
+        "recipeCatalog": null,
+        "author": null,
+        "maxLevelOfDifficulty": 1
+      });
+
       this.recipeList = [];
       this.loading = true;
       this.rcs.findById(x.catalogId)
@@ -71,16 +70,15 @@ export class RecipesComponent implements OnInit {
               this.us.findByRecipeCatalogId(x.catalogId)
                 .subscribe(res => {
                   this.authorFilter.setItems(res.map((y, i) => new DropdownItem({ id: i, content: y.id < 0 ? "Wszyscy" : y.firstName + " " + y.lastName, additionalData: { id: y.id } })));
-                  var authorIndex = this.authorFilter.items.filter(y => y.additionalData["id"] == x.authorId)[0];
-                  this.authorFilter.selectItem(authorIndex != undefined && authorIndex.id > 0 ? authorIndex.id : 0);
+                  this.authorFilter.selectItemByAdditionalData("id", x.authorId || -1);
                 });
             })
-            .then(() => this.filtersForm.controls['levelOfDifficulty'].patchValue(x.levelOfDifficulty || 1))
+            .then(() => this.filtersForm.controls['maxLevelOfDifficulty'].patchValue(x.maxLevelOfDifficulty || 5))
             .then(() => {
               this.rs.findFilteredRecipes({
                 catalogId: parseInt(x.catalogId),
                 authorId: parseInt(x.authorId) || -1,
-                levelOfDifficulty: parseInt(x.levelOfDifficulty) || 1
+                maxLevelOfDifficulty: parseInt(x.maxLevelOfDifficulty) || 1
               })
                 .toPromise()
                 .then(res => this.recipeList = res)
@@ -88,21 +86,21 @@ export class RecipesComponent implements OnInit {
             });
         })
         .finally(() => this.loading = false);
-    });
 
-    this.filtersForm.valueChanges.subscribe(res => {
-      if (res.recipeCatalog == null || res.author == null)
-        return;
-      
-      var params = { 
-        catalogId: res.recipeCatalog.additionalData.id,
-        levelOfDifficulty: res.levelOfDifficulty
-      };
+        this.filtersForm.valueChanges.subscribe(res => {
+          if (res.recipeCatalog == null || res.author == null)
+            return;
 
-      if (res.author.additionalData.id > 0)
-        params["authorId"] = res.author.additionalData.id;
+          var params = {
+            catalogId: res.recipeCatalog.additionalData.id,
+            maxLevelOfDifficulty: res.maxLevelOfDifficulty
+          };
 
-      this.router.navigate(['/recipes'], { queryParams: params });
+          if (res.author.additionalData.id > 0)
+            params["authorId"] = res.author.additionalData.id;
+
+          this.router.navigate(['/recipes'], { queryParams: params });
+        });
     });
   }
 }

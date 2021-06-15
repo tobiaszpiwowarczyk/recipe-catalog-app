@@ -19,5 +19,20 @@ export class RecipeService extends AbstractService {
   public findFilteredRecipes = (filterData: RecipeFilterData): Observable<Recipe[]> => 
     this.http.post<Recipe[]>(`/api/recipe/filter`, JSON.stringify(filterData), {headers: this.headers});
 
+  public createRecipe = (recipe: Recipe): Observable<any> => {
+    this.includeAccessTokenToHeaders();
+    return this.http.post("/api/recipe", JSON.stringify(recipe), { headers: this.authHeaders });
+  }
+
+  public updateRecipe = (recipe: Recipe): Observable<any> => {
+    this.includeAccessTokenToHeaders();
+    return this.http.put("/api/recipe", JSON.stringify(recipe), {headers: this.authHeaders});
+  }
+
+  public removeRecipe = (recipeId: number): Observable<any> => {
+    this.includeAccessTokenToHeaders();
+    return this.http.delete(`/api/recipe/${recipeId}`, { headers: this.authHeaders });
+  }
+
   public findById = (id: number): Observable<Recipe> => this.http.get<Recipe>(`/api/recipe/${id}`, {headers: this.headers});
 }

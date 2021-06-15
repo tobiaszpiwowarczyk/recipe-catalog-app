@@ -1,0 +1,82 @@
+<div class="create-recipe">
+    <form [formGroup]="recipeForm" (ngSubmit)="createRecipe()">
+        <div class="create-recipe__column">
+            <div class="create-recipe__property">
+                <div class="create-recipe__image-preview card" *ngIf="recipeForm.controls['imagePath'].value == ''">
+                    <div class="material-icons">add_photo_alternate</div>
+                </div>
+                <div class="create-recipe__image-preview card" 
+                     *ngIf="recipeForm.controls['imagePath'].value != ''"
+                     [style.background-image]="'url('+ recipeForm.controls['imagePath'].value +')'"></div>
+                <app-input formControlName="imagePath" [control]="recipeForm.controls['imagePath']" 
+                           placeholder="Wklej adres URL do obrazka" [showValidState]="false" appInputFluid></app-input>
+            </div>
+            <div class="create-recipe__property">
+                <app-dropdown formControlName="catalog" [control]="recipeForm.controls['catalog']" 
+                              labelText="Wybierz rodzaj potrawy" appDropdownFluid 
+                              appDropdownImaged #recipeCatalogFilter></app-dropdown>
+            </div>
+            <div class="create-recipe__property">
+                <app-slider formControlName="levelOfDifficulty" [control]="recipeForm.controls['levelOfDifficulty']"
+                            labelText="Wybierz poziom trudności" appSliderTriggerOnMouseleave></app-slider>
+            </div>
+            <div class="create-recipe__property">
+                <app-input formControlName="creationTime" [control]="recipeForm.controls['creationTime']"
+                           placeholder="Podaj czas wykonywania" [showValidState]="false" type="number" appInputFluid></app-input>
+            </div>
+            <div class="create-recipe__property">
+                <app-button [text]="'Dodaj składniki' + (recipe.ingredients.length > 0 ? ' ('+recipe.ingredients.length+')' : '')" 
+                            appButtonIconic="playlist_add" appButtonFluid (click)="ingredientsModal.open()"></app-button>
+            </div>
+        </div>
+        <div class="create-recipe__column">
+            <div class="create-recipe__title">
+                <app-input formControlName="name" [control]="recipeForm.controls['name']" [showValidState]="false"
+                           placeholder="Nazwa przepisu" appInputFluid></app-input>
+            </div>
+            <div class="create-recipe__description">
+                <app-textarea formControlName="description" [control]="recipeForm.controls['description']" 
+                              placeholder="Wprowadź opis przepisu..." 
+                              [width]="(3/4) * (1600 - 40)" [height]="500"></app-textarea>
+                <app-button text="Utwórz" appButtonIconic="note_add" type="submit" [disabled]="createRecipeButtonDisabled"></app-button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<app-modal title="Lista składników" [width]="600" [footerType]="ingredientModalFooterType" (onClose)="ingredientForm.reset()" #ingredientsModal>
+    <div class="create-recipe__ingredients">
+        <div class="create-recipe__ingredients__list">
+            <div *ngIf="recipe.ingredients.length > 0">
+                <div class="create-recipe__ingredient" *ngFor="let ingredient of recipe.ingredients; let i = index">
+                    <div class="create-recipe__ingredient__title">
+                        <h5>{{ingredient?.name}}</h5>
+                    </div>
+                    <div class="create-recipe__ingredient__remover" (click)="removeIngredient(i)">
+                        <div class="material-icons">highlight_remove</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="create-recipe__ingredients__list__no-items" *ngIf="recipe.ingredients.length == 0">
+                <h4>Brak składników</h4>
+            </div>
+        </div>
+        <form [formGroup]="ingredientForm" (ngSubmit)="addIngredient()">
+            <div class="create-recipe__ingredients__form">
+                <div class="create-recipe__ingredients__form__input">
+                    <app-input formControlName="name" [control]="ingredientForm.controls['name']" 
+                               placeholder="Nazwa składnika" [showValidState]="false" appInputFluid #ingredientName>
+                    </app-input>
+                </div>
+                <app-button text="Dodaj" type="submit" [disabled]="ingredientForm.invalid"></app-button>
+            </div>
+        </form>
+    </div>
+</app-modal>
+
+<app-modal [footerType]="ingredientModalFooterType" [type]="modalApprovalType" appModalContentCentered #recipeCreationApproveModal>
+    <p>Przepis został utworzony pomyślnie</p>
+</app-modal>
+
+<app-loading-spinner #spinner></app-loading-spinner>

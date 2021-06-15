@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { finalize, throwIfEmpty } from 'rxjs/operators';
 import { AbstractService } from '../util/AbstractService';
 import { User } from './user/User';
 
@@ -10,8 +9,8 @@ import { User } from './user/User';
 })
 export class LoginService extends AbstractService {
 
-  public static readonly ACCESS_TOKEN: string = "accessToken";
-  public static readonly AUTHORIZATION: string = "Authorization";
+  private static readonly ACCESS_TOKEN: string = "accessToken";
+  private static readonly AUTHORIZATION: string = "Authorization";
 
   constructor(protected http: HttpClient) {
     super(http);

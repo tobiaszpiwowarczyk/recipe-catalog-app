@@ -155,6 +155,7 @@
             position: relative;
             display: flex;
             align-items: center;
+            flex: 1;
 
             &__image {
                 position: relative;
@@ -164,6 +165,11 @@
                 img {
                     width: 0.5 * $recipe-catalog-header-height;
                 }
+            }
+
+            h2 {
+                position: relative;
+                flex: 1;
             }
         }
 
@@ -217,24 +223,10 @@
             position: relative;
             padding-bottom: 20px;
 
-            textarea {
-                position: relative;
-                width: 100%;
-                max-width: 100%;
-                height: 150px;
-                min-height: 150px;
-                margin: $input-margin 0;
-                padding: $input-left-padding;
-                border: $input-border-width solid $black, {
-                    radius: $border-radius;
-                };
-                box-shadow: 0 2px 5px rgba($black, 0.1);
-                font-size: 16px;
-                transition: border .2s $bezier;
-
-                &:focus {
-                    border-color: $blue;
-                }
+            form {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
             }
         }
 
@@ -250,5 +242,11 @@
                 @include flexCenter;
             }
         }
+    }
+
+    &--no-data {
+        position: relative;
+        text-align: center;
+        color: $gray;
     }
 }

@@ -5,8 +5,10 @@ class RecipeRepository extends AbstractRepository {
         super(pool, "recipe");
     }
 
+    getFieldMapping = () => new Object({ "user": "user_id", "catalog": "catalog_id" });
+    getValueMapping = (obj) => new Object({ "user": obj.user.id, "catalog": obj.catalog.id, "createdDate": "", "ingredients": "" });
+
     async findFilteredRecipes(filterData) {
-        console.log(filterData);
         return (await this.pool.query(`
             SELECT
                   r.id
@@ -27,7 +29,7 @@ class RecipeRepository extends AbstractRepository {
             LEFT OUTER JOIN recipe_rating rr on rr.recipe_id = r.id
             LEFT OUTER JOIN recipe_comment rc on rc.recipe_id = r.id
             WHERE r.catalog_id = ${filterData.catalogId}
-              AND r.level_of_difficulty >= ${filterData.levelOfDifficulty}
+              AND r.level_of_difficulty <= ${filterData.maxLevelOfDifficulty}
               ${filterData.authorId > 0 ? ('\nAND r.user_id = ' + filterData.authorId) : ''}
             GROUP BY  r.id
                     , u.first_name
@@ -37,13 +39,13 @@ class RecipeRepository extends AbstractRepository {
                     , r.created_date
                     , r.level_of_difficulty
                     , r.creation_time
+            ORDER BY created_date DESC
         `)).rows.map(row => this.prepareFields(row));
     }
 
 
     async findById(id) {
-        return this.prepareFields(
-            (await this.pool.query(`
+        var res = (await this.pool.query(`
                 SELECT
                       r.id
                     , r.name
@@ -115,8 +117,25 @@ class RecipeRepository extends AbstractRepository {
                         , u.last_name
                         , rc.*
                 ORDER BY r.id
-            `)).rows[0]
-        );
+            `)).rows[0];
+
+        return res == null ? null : this.prepareFields(res);
+    }
+
+
+    async updateRecipe(recipe) {
+        (await this.pool.query(`
+            UPDATE ${this.tableName} 
+               SET catalog_id = ${recipe.catalog.id},
+                   name = '${recipe.name}',
+                   image_path = '${recipe.imagePath}',
+                   description = '${recipe.description}',
+                   level_of_difficulty = ${recipe.levelOfDifficulty},
+                   creation_time = ${recipe.creationTime}
+             WHERE id = ${recipe.id}
+        `));
+
+        return true;
     }
 }
 

@@ -1,4 +1,12 @@
-<a class="recipe-catalog card" [routerLink]="['/recipes']" [queryParams]="{catalogId: catalogData?.id}" @recipeCatalogCardAnimation [@recipeCatalogHoverAnimation]="hoverState">
+<a class="recipe-catalog card" 
+   [routerLink]="['/recipes']" 
+   [queryParams]="{
+       catalogId: catalogData?.id, 
+       maxLevelOfDifficulty: 5
+   }" 
+   @recipeCatalogCardAnimation 
+   [@recipeCatalogHoverAnimation]="hoverState"
+>
     <div class="recipe-catalog__image">
         <img [attr.src]="catalogData?.imageName" />
     </div>

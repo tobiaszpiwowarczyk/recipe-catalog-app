@@ -1,0 +1,69 @@
+@import "../../../assets/variables";
+
+.textarea {
+    position: relative;
+    margin: $input-margin 0;
+    min-width: $input-width;
+    min-height: $input-height;
+    border: $input-border-width solid $black, {
+        radius: $border-radius;
+    };
+    box-shadow: 0 2px 5px rgba($black, 0.1);
+    display: inline-flex;
+    flex-direction: column;
+    transition: border .2s $bezier;
+
+    &__section {
+        position: relative;
+        width: 100%;
+
+        &:first-child {
+            height: 100%;
+            display: flex;
+        }
+
+        textarea {
+            position: relative;
+            min-width: $input-width - ($input-border-width * 2);
+            min-height: $input-height - ($input-border-width * 2);
+            padding: $input-left-padding;
+            border: none;
+            font-size: 16px;
+            transition: border .2s $bezier;
+
+            &:focus {
+                border-color: $blue;
+            }
+        }
+    }
+
+    &__error-list {
+        position: relative;
+        background: $red;
+        color: $white;
+        padding: 5px 10px;
+        display: none;
+    }
+
+    &--focused {
+        border-color: $blue;
+    }
+
+    &--invalid {
+        border-color: $red;
+
+        textarea {
+            color: $red;
+
+            &::-webkit-input-placeholder {
+                color: $red;
+            }
+        }
+    }
+
+    &--invalid & {
+        &__error-list {
+            display: block;
+        }
+    }
+}

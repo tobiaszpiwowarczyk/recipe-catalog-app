@@ -13,8 +13,8 @@
                                   labelText="Rodzaj potrawy" appDropdownFluid appDropdownImaged #recipeCatalogFilter></app-dropdown>
                 </div>
                 <div class="recipes-list__filters__filter-element">
-                    <app-slider formControlName="levelOfDifficulty" [control]="filtersForm.controls['levelOfDifficulty']" 
-                                labelText="Poziom trudności" appSliderTriggerOnMouseleave #levelOfDifficultySlider></app-slider>
+                    <app-slider formControlName="maxLevelOfDifficulty" [control]="filtersForm.controls['maxLevelOfDifficulty']" 
+                                labelText="Maskymalny poziom trudności" appSliderTriggerOnMouseleave></app-slider>
                 </div>
                 <div class="recipes-list__filters__filter-element">
                     <app-dropdown formControlName="author" [control]="filtersForm.controls['author']" labelText="Autor" appDropdownFluid

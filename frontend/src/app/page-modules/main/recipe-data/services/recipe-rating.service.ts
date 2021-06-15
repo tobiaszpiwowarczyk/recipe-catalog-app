@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { LoginService } from 'src/app/services/login.service';
 import { AbstractService } from 'src/app/util/AbstractService';
 import { RecipeRating } from '../util/RecipeRating';
@@ -17,8 +18,7 @@ export class RecipeRatingService extends AbstractService {
 
 
   findUsersRating(recipeId: number): Observable<RecipeRating> {
-    if (this.ls.isUserLogged() && !this.authHeaders.has(LoginService.AUTHORIZATION))
-      this.authHeaders = this.authHeaders.append(LoginService.AUTHORIZATION, localStorage.getItem(LoginService.ACCESS_TOKEN));
+    this.includeAccessTokenToHeaders();
 
     return this.http.get<RecipeRating>(`/api/recipe/rating/${recipeId}`, { headers: this.authHeaders });
   }

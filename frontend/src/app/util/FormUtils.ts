@@ -5,8 +5,8 @@ import { Observable, Observer } from "rxjs";
 export class FormUtils {
     static disableSubmitButton(form: FormGroup): Observable<boolean> {
         return new Observable((observer: Observer<boolean>) => {
-            Object.values(form.controls).forEach(control => {
-                control.statusChanges.subscribe(res => observer.next(res != "VALID"));
+            form.statusChanges.subscribe(res => {
+                observer.next(res != "VALID" && Object.values(form.controls).every(x => x.dirty || x.touched));
             });
         });
     }

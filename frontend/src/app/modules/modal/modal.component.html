@@ -14,10 +14,19 @@
         <div class="modal__section modal__content" [class.modal__content--centered]="modalContentCentered">
             <ng-content></ng-content>
         </div>
-        <div class="modal__section modal__footer">
+        <div class="modal__section modal__footer" *ngIf="footerType == 0">
             <app-button-group>
                 <app-button text="OK" (click)="closeModal(true)"></app-button>
                 <app-button text="Anuluj" (click)="closeModal(false)"></app-button>
+            </app-button-group>
+        </div>
+        <div class="modal__section modal__footer" *ngIf="footerType == 1">
+            <app-button text="OK" (click)="closeModal(true)"></app-button>
+        </div>
+        <div class="modal__section modal__footer" *ngIf="footerType == 2">
+            <app-button-group>
+                <app-button text="Tak" (click)="closeModal(true)"></app-button>
+                <app-button text="Nie" (click)="closeModal(false)"></app-button>
             </app-button-group>
         </div>
     </div>

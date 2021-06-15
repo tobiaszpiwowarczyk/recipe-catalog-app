@@ -12,13 +12,16 @@
 
     .modal {
         position: absolute;
-        top: 50px;
+        top: $modal-top-offset;
+        max-height: calc(100vh - #{$modal-top-offset * 2});
         left: 50%;
         transform: translateX(-50%);
         background: $white;
         border-radius: $border-radius;
         box-shadow: 0 2px 10px rgba(0,0,0,.2);
         overflow: hidden;
+        display: flex;
+        flex-direction: column;
 
         &__section {
             position: relative;
@@ -73,6 +76,8 @@
         }
 
         &__content {
+            overflow: auto;
+
             &--centered {
                 display: flex;
                 justify-content: center;

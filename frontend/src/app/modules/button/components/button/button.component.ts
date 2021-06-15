@@ -9,8 +9,11 @@ export class ButtonComponent {
 
   iconic: boolean = false;
   iconName: string = "";
+  fluid: boolean = false;
+  negative: boolean = false;
 
   @Input() text: string = "";
+  @Input() type: string = "button";
   @Input() disabled: boolean = false;
 
   constructor() { }

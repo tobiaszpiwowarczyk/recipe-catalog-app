@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ModalComponent } from 'src/app/modules/modal/modal.component';
+import { ModalEvent } from 'src/app/modules/modal/util/ModalEvent';
+import { ModalFooterType } from 'src/app/modules/modal/util/ModalFooterType';
 import { LoginService } from 'src/app/services/login.service';
 import { Recipe } from 'src/app/services/recipe/Recipe';
 import { RecipeService } from 'src/app/services/recipe/recipe.service';
@@ -16,12 +19,17 @@ import { RecipeRating } from './util/RecipeRating';
 })
 export class RecipeDataComponent implements OnInit {
 
+  dataFound: boolean = true;
   recipeData: Recipe;
   loading: boolean = true;
   commentsForm: FormGroup;
   ratingForm: FormGroup;
   loggedIn: boolean = false;
   ratingData: RecipeRating;
+  hasAdditionalPrivileges: boolean = false;
+  recipeRemovalModalFooterType: ModalFooterType = ModalFooterType.YES_NO;
+
+  @ViewChild("recipeRemovalModal", { static: false }) recipeRemovalModal: ModalComponent;
 
   constructor(
     private rs: RecipeService,
@@ -30,7 +38,8 @@ export class RecipeDataComponent implements OnInit {
     private fb: FormBuilder,
     private ls: LoginService,
     private rcs: RecipeCommentService,
-    private rrs: RecipeRatingService
+    private rrs: RecipeRatingService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -39,9 +48,6 @@ export class RecipeDataComponent implements OnInit {
     this.loggedIn = this.ls.isUserLogged();
 
     if (this.loggedIn) {
-      this.commentsForm = this.fb.group({
-        "comment": ['', Validators.required]
-      });
 
       this.ratingForm = this.fb.group({
         'rating': 0
@@ -65,6 +71,9 @@ export class RecipeDataComponent implements OnInit {
             .subscribe(x => this.ratingData = x);
         }
       });
+
+      this.ls.getLoggedUser()
+        .subscribe(res => this.hasAdditionalPrivileges = res.role.id == 2);
     }
 
     this.route.queryParams.subscribe(x => {
@@ -75,16 +84,28 @@ export class RecipeDataComponent implements OnInit {
         res.comments.sort((a, b) => (a.createdDate > b.createdDate) ? -1 : 1);
         this.recipeData = res;
         this.ts.setTitle(res.name);
+
+        if (res.commentsCount < 5) {
+          this.commentsForm = this.fb.group({
+            "comment": ['', Validators.required]
+          });
+        }
+
       })
       .then(() => {
-        this.rrs.findUsersRating(this.route.snapshot.queryParams.id)
-          .toPromise()
-          .then(res => {
-              this.ratingData = res;
-              this.ratingForm.controls['rating'].patchValue(res.value);
-          })
-          .finally(() => this.loading = false);
-      });
+        if (this.loggedIn) {
+          this.rrs.findUsersRating(this.route.snapshot.queryParams.id)
+            .toPromise()
+            .then(res => {
+              if (res != null) {
+                this.ratingData = res;
+                this.ratingForm.controls['rating'].patchValue(res.value);
+              }
+            });
+        }
+      })
+      .catch(() => this.dataFound = false)
+      .finally(() => this.loading = false);
     })
   }
 
@@ -103,5 +124,20 @@ export class RecipeDataComponent implements OnInit {
         this.recipeData.comments.unshift(res);
         this.commentsForm.reset();
       });
+  }
+
+  public editRecipe(): void {
+    this.router.navigate(["/edit-recipe"], { queryParams: { id: this.route.snapshot.queryParams.id }});
+  }
+
+  public removeRecipe(evt: ModalEvent): void {
+    if (evt.approved) {
+      this.rs.removeRecipe(this.route.snapshot.queryParams.id)
+        .subscribe(res => {
+          if (res.removed) {
+            this.router.navigate(['/recipes'], {queryParams: {catalogId: this.recipeData.catalog.id}});
+          }
+        })
+    }
   }
 }

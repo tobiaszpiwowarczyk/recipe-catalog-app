@@ -1,0 +1,15 @@
+<div class="textarea" 
+     [class.textarea--focused]="focused"
+     [class.textarea--invalid]="control?.errors && (control.dirty || control.touched)">
+    <div class="textarea__section">
+        <textarea [attr.placeholder]="placeholder"
+                  [style.width]="'500px'" 
+                  [style.width]="width + 'px'" 
+                  [style.height]="height + 'px'"
+                  [ngModel]="value"
+                  (ngModelChange)="change($event)"
+                  (focus)="focused = true"
+                  (blur)="focused = false"></textarea>
+    </div>
+    <div class="textarea__section textarea__error-list" *ngIf="errorMessage != null">{{errorMessage?.message}}</div>
+</div>

@@ -9,6 +9,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RecipeCommentComponent } from './components/recipe-comment/recipe-comment.component';
 import { RecipeCommentService } from './services/recipe-comment.service';
 import { RecipeRatingService } from './services/recipe-rating.service';
+import { TextareaModule } from 'src/app/modules/textarea/textarea.module';
+import { ModalModule } from 'src/app/modules/modal/modal.module';
 
 
 
@@ -19,6 +21,9 @@ import { RecipeRatingService } from './services/recipe-rating.service';
     RecipeDataRoutingModule,
     LoadingSpinnerModule,
     ButtonModule,
+    TextareaModule,
+    ButtonModule,
+    ModalModule,
     ReactiveFormsModule
   ],
   providers: [RecipeCommentService, RecipeRatingService]

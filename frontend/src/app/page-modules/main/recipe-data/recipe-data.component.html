@@ -1,4 +1,4 @@
-<div class="recipe-data" *ngIf="!loading">
+<div class="recipe-data" *ngIf="!loading && dataFound">
     <div class="recipe-data__section">
         <div class="recipe-data__column">
             <div class="recipe-data__column__image">
@@ -45,6 +45,11 @@
                         <img [attr.src]="recipeData?.catalog?.imageName" [attr.alt]="recipeData?.catalog?.name" />
                     </div>
                     <h2>{{recipeData?.name}}</h2>
+                    <app-button-group *ngIf="hasAdditionalPrivileges">
+                        <app-button appButtonIconic="edit" (click)="editRecipe()"></app-button>
+                        <app-button appButtonIconic="delete_forever" (click)="recipeRemovalModal.open()"
+                            appButtonNegative></app-button>
+                    </app-button-group>
                 </div>
             </div>
             <div class="recipe-data__column__content">
@@ -92,10 +97,10 @@
         <div class="recipe-data__comments__header">
             <h2>Komentarze ({{recipeData?.comments.length}})</h2>
         </div>
-        <div class="recipe-data__comments__form" *ngIf="loggedIn">
+        <div class="recipe-data__comments__form" *ngIf="loggedIn && recipeData?.commentsCount < 5">
             <form [formGroup]="commentsForm" (ngSubmit)="addComment()">
-                <textarea formControlName="comment"></textarea>
-                <app-button text="Dodaj komentarz" appButtonIconic="add_comment" [disabled]="commentsForm.invalid"></app-button>
+                <app-textarea formControlName="comment" [control]="commentsForm.controls['comment']" [width]="1600" [height]="150"></app-textarea>
+                <app-button text="Dodaj komentarz" appButtonIconic="add_comment" [disabled]="commentsForm.invalid" type="submit"></app-button>
             </form>
         </div>
         <div class="recipe-data__comments__list" *ngIf="recipeData.comments.length > 0">
@@ -106,5 +111,14 @@
         </div>
     </div>
 </div>
+
+<div class="recipe-data recipe-data--no-data" *ngIf="!dataFound">
+    <h2>Przepis o podanym identyfikatorze nie istnieje.</h2>
+</div>
+
+<app-modal *ngIf="hasAdditionalPrivileges && dataFound" [footerType]="recipeRemovalModalFooterType" 
+           appModalContentCentered (onClose)="removeRecipe($event)" #recipeRemovalModal>
+    <p>Cy na pewno chcesz usunąć dany przepis?</p>
+</app-modal>
 
 <app-loading-spinner [shown]="loading" #spinner></app-loading-spinner>

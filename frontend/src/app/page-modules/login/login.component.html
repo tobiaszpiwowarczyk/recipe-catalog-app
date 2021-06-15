@@ -15,7 +15,7 @@
             <p>Nazwa użytkownika lub hasło jest nieprawidłowe</p>
         </div>
         <div class="authorization-card__section authorization-card__section__footer">
-            <app-button text="Zaloguj się" appButtonIconic="login" [disabled]="loginButtonDisabled"></app-button>
+            <app-button text="Zaloguj się" appButtonIconic="login" [disabled]="loginButtonDisabled" type="submit"></app-button>
             <p>Jeżeli nie posiadasz konta, <a [routerLink]="['/register']">Zarejestruj się</a></p>
         </div>
     </form>

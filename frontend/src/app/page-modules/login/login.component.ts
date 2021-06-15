@@ -60,7 +60,10 @@ export class LoginComponent implements OnInit {
     }
     else {
       FormUtils.indicateErrors(this.loginForm)
-        .subscribe(res => this.loginButtonDisabled = res);
+        .subscribe(res => {
+          this.loginButtonDisabled = res;
+          this.loginForm.updateValueAndValidity();
+        });
     }
   }
 }

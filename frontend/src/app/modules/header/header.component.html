@@ -7,6 +7,7 @@
 
             <app-header-menu>
                 <app-header-menu-item *ngIf="isLogged" [text]="fullName" icon="person"></app-header-menu-item>
+                <app-header-menu-item *ngIf="isLogged" text="Nowy przepis" icon="description" [appHeaderMenuItemWithLink]="['/create-recipe']"></app-header-menu-item>
                 <app-header-menu-item *ngIf="isLogged" text="Wyloguj się" icon="logout" (click)="logout()"></app-header-menu-item>
                 <app-header-menu-item *ngIf="!isLogged" text="Zaloguj się" icon="login" [appHeaderMenuItemWithLink]="['/login']"></app-header-menu-item>
             </app-header-menu>

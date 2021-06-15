@@ -17,5 +17,6 @@ export class TitleService {
     this.title.setTitle(this.mainTitle);
   }
 
-  public setTitle = (title: string): void => this.title.setTitle(`${this.mainTitle} - ${title}`);
+  public setTitle = (title: string): void => 
+    this.title.setTitle(title != "" ? `${this.mainTitle} - ${title}` : this.mainTitle);
 }

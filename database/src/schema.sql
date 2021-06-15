@@ -73,7 +73,7 @@ create table if not exists recipe
 create table if not exists recipe_rating
 (
       id                  serial not null primary key
-    , recipe_id           int not null references recipe(id)
+    , recipe_id           int not null references recipe(id) ON DELETE CASCADE
     , user_id             int not null references users(id)
     , value               int not null check(value between 1 and 5)
     , created_date        timestamp not null default CURRENT_TIMESTAMP
@@ -84,7 +84,7 @@ create table if not exists recipe_rating
 create table if not exists recipe_comment
 (
       id                  serial not null primary key
-    , recipe_id           int not null references recipe(id)
+    , recipe_id           int not null references recipe(id) ON DELETE CASCADE
     , user_id             int not null references users(id)
     , content             varchar(1000) not null
     , likes               int not null default 0 check(likes >= 0)
@@ -96,7 +96,7 @@ create table if not exists recipe_comment
 create table if not exists recipe_ingredients
 (
       id                  serial not null primary key
-    , recipe_id           int not null references recipe(id)
+    , recipe_id           int not null references recipe(id) ON DELETE CASCADE
     , name                varchar(1000) not null
     , unique(recipe_id, name)
 );
@@ -114,15 +114,14 @@ insert into users_roles
     (name)
 values
     ('Użytkownik'),
-    ('Moderator'),
     ('Administrator')
 ;
 
 insert into users
     (role_id, username, password, first_name, last_name, email_address)
 values
-    (3, 'jkowalski', 'hasl0123', 'Jan', 'Kowalski', 'jkowalski@gmail.com'),
-    (2, 'anowak', 'hasl0123', 'Anna', 'Nowak', 'anowak@gmail.com'),
+    (2, 'jkowalski', 'hasl0123', 'Jan', 'Kowalski', 'jkowalski@gmail.com'),
+    (1, 'anowak', 'hasl0123', 'Anna', 'Nowak', 'anowak@gmail.com'),
     (1, 'mmchirrie0', 'hasl0123', 'Meredith', 'MacChirrie', 'mmchirrie0@gmail.com'),
     (1, 'jhowden1', 'hasl0123', 'Jock', 'Howden', 'jhowden1@gmail.com'),
     (1, 'alimbert2', 'hasl0123', 'Avrom', 'Limbert', 'alimbert2@gmail.com'),

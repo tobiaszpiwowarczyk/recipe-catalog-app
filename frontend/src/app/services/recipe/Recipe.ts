@@ -21,5 +21,6 @@ export class Recipe {
 
     constructor(values: Object = {}) {
         Object.assign(this, values);
+        this.ingredients = [];
     }
 }

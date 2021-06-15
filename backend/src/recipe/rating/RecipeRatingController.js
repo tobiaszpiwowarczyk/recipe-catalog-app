@@ -24,7 +24,7 @@ class RecipeRatingController extends AbstractController {
         var rating = (await this.#recipeRatingRepository.findRatingByUserIdAndRecipeId(user.id, req.params.recipeId));
 
         if (rating == null)
-            res.sendStatus(404);
+            res.sendStatus(204);
         else {
             return res.json(rating);
         }

@@ -16,4 +16,9 @@ export class AbstractService {
             "Content-Type": "application/json"
         });
     }
+
+    protected includeAccessTokenToHeaders(): void {
+        if (localStorage.getItem("accessToken") != null && !this.authHeaders.has("Authorization"))
+            this.authHeaders = this.authHeaders.append("Authorization", localStorage.getItem("accessToken"));
+    }
 }

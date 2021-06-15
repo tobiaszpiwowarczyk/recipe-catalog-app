@@ -25,6 +25,7 @@
         position: relative;
         padding: 0 2.2em;
         line-height: $button-height;
+        flex: 1;
     }
 
     &--iconic {
@@ -37,8 +38,19 @@
             width: $button-height;
             height: 100%;
             @include flexCenter;
-            background: rgba($black, 0.2);
+
+            &:not(&--no-text) {
+                background: rgba($black, 0.2);
+            }
         }
+    }
+
+    &--fluid {
+        width: 100%;
+    }
+
+    &--negative {
+        background: $red;
     }
 
     &[disabled] {

@@ -1,6 +1,11 @@
-<button class="button" [class.button--iconic]="iconic" [disabled]="disabled">
-    <div class="button__icon" *ngIf="iconic">
+<button class="button" 
+        [class.button--iconic]="iconic"
+        [class.button--fluid]="fluid"
+        [class.button--negative]="negative"
+        [disabled]="disabled"
+        [attr.type]="type">
+    <div class="button__icon" [class.button__icon--no-text]="text == ''" *ngIf="iconic">
         <span class="material-icons">{{iconName}}</span>
     </div>
-    <div class="button__content">{{text}}</div>
+    <div class="button__content" *ngIf="text != ''">{{text}}</div>
 </button>

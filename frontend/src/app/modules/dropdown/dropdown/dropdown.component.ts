@@ -74,6 +74,12 @@ export class DropdownComponent implements OnInit, ControlValueAccessor {
     };
   }
 
+  public selectItemByAdditionalData = (key: string, value: any): void => 
+    this.selectItem(this.items.filter(x => x.additionalData[key] == value)[0].id);
+
+  public getItemByAdditionalData = (key: string, value: any): DropdownItem =>
+    this.items.filter(x => x.additionalData[key] == value)[0];
+
 
   @HostListener("window:click", ["$event"])
   private closeDropdown(evt): void {

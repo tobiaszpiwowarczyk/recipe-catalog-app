@@ -10,7 +10,9 @@ export class ErrorMessageFactory {
             {name: "minlength", message: "Hasło powinno zawierać conajmniej $requiredLength znaków. Wprowadziłeś $actualLength znaki"},
             {name: "usernameExists", message: "Podana nazwa użytkownika już istnieje"},
             {name: "emailAddressIncorrect", message: "Podany adres e-mail jest nieprawidłowy"},
-            {name: "emailAddressExists", message: "Podany adres e-mail już istnieje"}
+            {name: "emailAddressExists", message: "Podany adres e-mail już istnieje"},
+            {name: "ingredientExists", message: "Już wprowadziłeś ten składnik"},
+            {name: "min", message: "Wartość powinna być większa niż $min"}
         ];
     }
 

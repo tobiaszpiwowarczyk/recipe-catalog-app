@@ -16,8 +16,7 @@ export class RecipeCommentService extends AbstractService {
   }
 
   public createComment = (comment: RecipeComment): Observable<RecipeComment> => {
-    if (this.ls.isUserLogged() && !this.authHeaders.has(LoginService.AUTHORIZATION))
-      this.authHeaders = this.authHeaders.append(LoginService.AUTHORIZATION, localStorage.getItem(LoginService.ACCESS_TOKEN));
+    this.includeAccessTokenToHeaders();
 
     return this.http.post<RecipeComment>("/api/recipe/comment", JSON.stringify(comment), { headers: this.authHeaders });
   }
